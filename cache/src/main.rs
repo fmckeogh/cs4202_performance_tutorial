@@ -13,23 +13,23 @@ fn modify_pixel((r, g, b): &mut (u8, u8, u8)) {
 fn main() {
     let mut image = vec![vec![(3u8, 4u8, 5u8); WIDTH]; HEIGHT];
 
-    // loop column-first
-    let start = Instant::now();
-    for x in 0..WIDTH {
-        for y in 0..HEIGHT {
-            modify_pixel(&mut image[y][x]);
-        }
-    }
-    println!("column-first:\t\t{} us", start.elapsed().as_micros());
+    // // loop column-first
+    // let start = Instant::now();
+    // for x in 0..WIDTH {
+    //     for y in 0..HEIGHT {
+    //         modify_pixel(&mut image[y][x]);
+    //     }
+    // }
+    // println!("column-first:\t\t{} us", start.elapsed().as_micros());
 
-    // loop row-first
-    let start = Instant::now();
-    for y in 0..HEIGHT {
-        for x in 0..WIDTH {
-            modify_pixel(&mut image[y][x]);
-        }
-    }
-    println!("row-first:\t\t{} us", start.elapsed().as_micros());
+    // // loop row-first
+    // let start = Instant::now();
+    // for y in 0..HEIGHT {
+    //     for x in 0..WIDTH {
+    //         modify_pixel(&mut image[y][x]);
+    //     }
+    // }
+    // println!("row-first:\t\t{} us", start.elapsed().as_micros());
 
     // ...now let's make it a linear vector
     let mut image = vec![(3u8, 4u8, 5u8); WIDTH * HEIGHT];
