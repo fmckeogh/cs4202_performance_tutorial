@@ -5,6 +5,13 @@ fn main() {
     __kernel void add(__global float* buffer, float initial, float scalar) {
         buffer[get_global_id(0)] = initial;
         buffer[get_global_id(0)] /= powr(scalar, 1.42132);
+        buffer[get_global_id(0)] *= powr(484.23423, 0.48474);
+        buffer[get_global_id(0)] /= powr(scalar, 1.42132);
+        buffer[get_global_id(0)] *= powr(484.23423, 0.48474);
+        buffer[get_global_id(0)] /= powr(scalar, 1.42132);
+        buffer[get_global_id(0)] *= powr(484.23423, 0.48474);
+        buffer[get_global_id(0)] /= powr(scalar, 1.42132);
+        buffer[get_global_id(0)] *= powr(484.23423, 0.48474);
     }
 "#;
 
@@ -33,6 +40,13 @@ fn main() {
     for element in &mut vec {
         *element = 10.0f32;
         *element /= 3.141f32.powf(1.42132);
+        *element *= 484.23423f32.powf(0.48474);
+        *element /= 3.141f32.powf(1.42132);
+        *element *= 484.23423f32.powf(0.48474);
+        *element /= 3.141f32.powf(1.42132);
+        *element *= 484.23423f32.powf(0.48474);
+        *element /= 3.141f32.powf(1.42132);
+        *element *= 484.23423f32.powf(0.48474);
     }
     println!("cpu {} us", start.elapsed().as_micros());
 }
