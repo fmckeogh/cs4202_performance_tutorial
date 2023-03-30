@@ -1,11 +1,9 @@
-use std::io::Read;
-
 use {
     rand::{thread_rng, Rng},
-    std::{fs::File, os::fd::FromRawFd, time::Instant},
+    std::{fs::File, hint::black_box, io::Read, os::fd::FromRawFd, time::Instant},
 };
 
-fn init_perf() -> i32 {
+fn init_perf() -> File {
     // Construct a zero-filled `perf_event_attr`.
     let mut attrs = perf_event_open_sys::bindings::perf_event_attr::default();
 
@@ -18,11 +16,16 @@ fn init_perf() -> i32 {
     attrs.set_exclude_hv(1);
 
     // Make the system call.
-    unsafe { perf_event_open_sys::perf_event_open(&mut attrs, 0, -1, -1, 0) }
+    let raw_fd = unsafe { perf_event_open_sys::perf_event_open(&mut attrs, 0, -1, -1, 0) };
+    if raw_fd < 0 {
+        panic!("perf_event_open failed");
+    }
+
+    unsafe { File::from_raw_fd(raw_fd) }
 }
 
 fn main() {
-    let f = unsafe { File::from_raw_fd(init_perf()) };
+    let f = init_perf();
 
     let mut data = vec![0u32; 10_000_000];
     thread_rng().fill(data.as_mut_slice());
@@ -41,19 +44,17 @@ fn main() {
                 lo += 1;
             }
         }
-
         let final_count = read_count(&f);
 
+        print!("{} {}", hi, lo);
+
         println!(
-            "random: {} us, {} branch mispredicts, {}, {}",
+            "\rrandom: {} us, {} branch mispredicts",
             start.elapsed().as_micros(),
             final_count - count,
-            hi,
-            lo
         );
     }
 
-    println!("sorting...");
     thread_rng().fill(data.as_mut_slice());
     // sort the data
     data.sort();
@@ -72,12 +73,12 @@ fn main() {
         }
         let final_count = read_count(&f);
 
+        print!("{} {}", hi, lo);
+
         println!(
-            "sorted: {} us, {} branch mispredicts, {}, {}",
+            "\rsorted: {} us, {} branch mispredicts",
             start.elapsed().as_micros(),
             final_count - count,
-            hi,
-            lo
         );
     }
 }
