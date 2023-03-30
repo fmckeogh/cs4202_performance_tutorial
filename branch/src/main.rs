@@ -1,6 +1,6 @@
 use {
     rand::{thread_rng, Rng},
-    std::{fs::File, hint::black_box, io::Read, os::fd::FromRawFd, time::Instant},
+    std::{fs::File, io::Read, os::fd::FromRawFd, time::Instant},
 };
 
 fn init_perf() -> File {
