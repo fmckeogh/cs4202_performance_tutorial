@@ -5,9 +5,9 @@ const HEIGHT: usize = 8192;
 
 /// example function that modifies a pixel
 fn modify_pixel((r, g, b): &mut (u8, u8, u8)) {
-    *r = r.pow(3) / 4;
-    *g = g.pow(3) / 4;
-    *b = b.pow(3) / 4;
+    *r = r.wrapping_pow(3) / 4;
+    *g = g.wrapping_pow(3) / 4;
+    *b = b.wrapping_pow(3) / 4;
 }
 
 fn main() {

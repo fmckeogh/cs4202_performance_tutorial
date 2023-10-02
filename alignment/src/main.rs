@@ -3,21 +3,11 @@ use std::time::Instant;
 const WIDTH: usize = 8192;
 const HEIGHT: usize = 8192;
 
-#[repr(C)]
 #[derive(Clone)]
 struct Pixel {
     red: u16,
-    green: u16,
-    blue: u16,
-    _0: u16,
-    _1: u32,
-    _2: u64,
-    _3: u16,
-    _4: u32,
-    _5: u64,
-    _6: u16,
-    _7: u32,
-    _8: u64,
+    green: u32,
+    blue: u32,
     // red: u16,
     // _0: u16,
     // _1: u32,
@@ -47,15 +37,6 @@ impl Default for Pixel {
             red: 5,
             green: 4,
             blue: 3,
-            _0: 0,
-            _1: 0,
-            _2: 0,
-            _3: 0,
-            _4: 0,
-            _5: 0,
-            _6: 0,
-            _7: 0,
-            _8: 0,
         }
     }
 }

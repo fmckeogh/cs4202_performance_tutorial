@@ -1,2 +1,5 @@
 [workspace]
 members = ["cache", "alignment", "branch", "opencl"]
+
+[profile.release]
+opt-level = 3
